@@ -3,7 +3,7 @@ module Colors = {
   let primary = #hex("#743AF0")
   let primaryLight = #hex("#6F5A9A")
 
-  let garyDark = #hex("#242424")
+  let grayDark = #hex("#242424")
   let gray = #hex("#3A3939")
   let grayLight = #hex("#A7A7A7")
 
