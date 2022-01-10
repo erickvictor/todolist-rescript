@@ -49,11 +49,11 @@ module Styles = {
     "> input:checked + div": {
       "> img": {
         "zIndex": 10,
-        "animation": `${fillAnimation} 300ms forwwards`,
+        "animation": `${fillAnimation} 300ms forwards`,
         "animationDelay": "100ms",
       },
       "&:after": {
-        "animation": `${fillAnimation} 300ms forwwards`,
+        "animation": `${fillAnimation} 300ms forwards`,
       }      
     },
   })
