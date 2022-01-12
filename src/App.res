@@ -13,12 +13,17 @@ Emotion.injectGlobal({
   "*": {
     "boxSizing": "border-box",
     "fontFamily": Theme.Constants.fontFamily,
-  }
+  },
 })
 
 @react.component
 let make = () => {
-  <Box p=[xs(4)] width=[xs(100.0->#pct)] height=[xs(100.0->#pct)] bgColor=[xs(Theme.Colors.black)]>
-    <Input placeholder="Nova task" />
+  <Box
+    px=[xs(4), md(9)]
+    py=[xs(4), md(9)]
+    width=[xs(100.0->#pct)]
+    height=[xs(100.0->#pct)]
+    bgColor=[xs(Theme.Colors.black)]>
+    <Tasks />
   </Box>
 }
