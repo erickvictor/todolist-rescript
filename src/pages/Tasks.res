@@ -3,6 +3,8 @@ open Render
 
 let {useTasks} = module(TasksHook)
 
+let formatDate = value => value->Js.Date.fromString->DateFns.format("dd/MM/yy hh:mm")
+
 @module("../assets/logo.svg") external logo: string = "default"
 @module("../assets/empty-state.svg") external emptyState: string = "default"
 
@@ -102,24 +104,28 @@ module NewTaskInput = {
 
 @react.component
 let make = () => {
-  let _ = useTasks()
+  let result = useTasks()
+
   <Box display=[xs(#flex)] flexDirection=[xs(#column)] alignItems=[xs(#center)]>
     <Box display=[xs(#flex)] justifyContent=[xs(#center)] tag=#header> <img src=logo /> </Box>
     <Box
       display=[xs(#flex)] flexDirection=[xs(#column)] width=[xs(100.0->#pct)] maxW=[xs(63.4->#rem)]>
       <NewTaskInput />
-      // <Box mt=[xs(4)]>
-      //   <TaskItem
-      //     name="Adicionar nova tarefas na lista" createdAt=`11/10/2021 às 19h53m` completed=false
-      //   />
-      //   <TaskItem
-      //     name="Adicionar nova tarefa #2" createdAt=`12/10/2021 às 13h30m` completed=true
-      //   />
-      //   <TaskItem
-      //     name="Adicionar nova tarefa #3" createdAt=`13/10/2021 às 14h44m` completed=true
-      //   />
-      // </Box>
-      <EmptyState />
+      <Box mt=[xs(4)]>
+        {switch result {
+        | Loading => "loading..."->s
+        | Error => "Error :("->s
+        | Data([]) => <EmptyState />
+        | Data(tasks) => tasks->map(({name, completed, createdAt}, key) => {
+            <TaskItem
+              key
+              name
+              createdAt={createdAt->formatDate}
+              completed
+            />
+          })
+        }}
+      </Box>
     </Box>
   </Box>
 }
