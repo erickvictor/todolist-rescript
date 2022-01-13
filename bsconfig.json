@@ -18,6 +18,7 @@
     "@rescript/react",
     "@rescriptbr/ancestor",
     "rescript-jzon",
+    "@ryyppy/rescript-promise",
     "@rescriptbr/react-query"
   ]
 }

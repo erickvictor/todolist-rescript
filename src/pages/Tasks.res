@@ -1,6 +1,8 @@
 open Ancestor.Default
 open Render
 
+let {useTasks} = module(TasksHook)
+
 @module("../assets/logo.svg") external logo: string = "default"
 @module("../assets/empty-state.svg") external emptyState: string = "default"
 
@@ -100,6 +102,7 @@ module NewTaskInput = {
 
 @react.component
 let make = () => {
+  let _ = useTasks()
   <Box display=[xs(#flex)] flexDirection=[xs(#column)] alignItems=[xs(#center)]>
     <Box display=[xs(#flex)] justifyContent=[xs(#center)] tag=#header> <img src=logo /> </Box>
     <Box

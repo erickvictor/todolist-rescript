@@ -7,13 +7,15 @@
     "build": "vite build",
     "serve": "vite preview",
     "rescript:build": "rescript",
-    "rescript:start": "rescript build -w"
+    "rescript:start": "rescript build -w",
+    "rescript:clean": "recript clean"
   },
   "dependencies": {
     "@emotion/css": "^11.7.1",
     "@rescript/react": "0.10.3",
     "@rescriptbr/ancestor": "^0.4.6",
     "@rescriptbr/react-query": "^0.0.1",
+    "@ryyppy/rescript-promise": "^2.1.0",
     "@vitejs/plugin-react": "1.0.1",
     "json-server": "^0.17.0",
     "react": "17.0.0",
