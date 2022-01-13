@@ -14,5 +14,10 @@
   ],
   "reason": { "react-jsx": 3 },
   "suffix": ".bs.js",
-  "bs-dependencies": ["@rescript/react", "@rescriptbr/ancestor"]
+  "bs-dependencies": [
+    "@rescript/react",
+    "@rescriptbr/ancestor",
+    "rescript-jzon",
+    "@rescriptbr/react-query"
+  ]
 }
