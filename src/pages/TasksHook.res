@@ -11,12 +11,20 @@ let handleFetch = _ => {
   ->thenResolve(json => Jzon.decodeWith(json, apiCodec))
 }
 
-type requestResult = 
+type requestResult =
   | Data(array<TaskTypes.t>)
   | Loading
   | Error
 
+type hookResult = {
+  result: requestResult,
+  handleChange: ReactEvent.Form.t => unit,
+  taskName: string,
+}
+
 let useTasks = () => {
+  let (taskName, setTaskName) = React.useState(_ => "")
+
   let result = useQuery(
     queryOptions(
       ~queryKey="tasks",
@@ -26,11 +34,21 @@ let useTasks = () => {
     ),
   )
 
-  switch result {
-  | { isLoading: true } => Loading
-  | { isError: true } 
-  | { data: Some(Error(_)) } => Error
-  | { data: Some(Ok(tasks)), isLoading: false, isError: false} => Data(tasks)
-  | _ => Error
+  let handleChange = event => {
+    let target = ReactEvent.Form.target(event)
+
+    setTaskName(_ => target["value"])
+  }
+  {
+    taskName: taskName,
+    handleChange: handleChange,
+    result: switch result {
+    | {isLoading: true} => Loading
+    | {isError: true}
+    | {data: Some(Error(_))} =>
+      Error
+    | {data: Some(Ok(tasks)), isLoading: false, isError: false} => Data(tasks)
+    | _ => Error
+    },
   }
 }

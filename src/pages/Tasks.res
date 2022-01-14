@@ -5,10 +5,6 @@ let {useTasks} = module(TasksHook)
 
 let formatDate = value => value->Js.Date.fromString->DateFns.format("dd/MM/yy hh:mm")
 
-@module("../assets/logo.svg") external logo: string = "default"
-@module("../assets/empty-state.svg") external emptyState: string = "default"
-@module("../assets/spinner.svg") external spinner: string = "default"
-
 module ErrorMessage = {
   @react.component
   let make = () => {
@@ -51,7 +47,7 @@ module EmptyState = {
       flexDirection=[xs(#column)]
       alignItems=[xs(#center)]
       justifyContent=[xs(#center)]>
-      <Base tag=#img mb=[xs(3)] width=[xs(200->#px)] src=emptyState />
+      <Base tag=#img mb=[xs(3)] width=[xs(200->#px)] src=Assets.emptyState />
       <Typography
         tag=#h1
         m=[xs(0)]
@@ -121,14 +117,14 @@ module Spinner = {
       display=[xs(#flex)]
       justifyContent=[xs(#center)]
       alignItems=[xs(#center)]>
-      <Base tag=#img width=[xs(6.4->#rem)] src=spinner />
+      <Base tag=#img width=[xs(6.4->#rem)] src=Assets.spinner />
     </Box>
   }
 }
 
 module NewTaskInput = {
   @react.component
-  let make = () => {
+  let make = (~onChange) => {
     <Box>
       <Typography
         tag=#label
@@ -141,7 +137,7 @@ module NewTaskInput = {
         {`Nova Tarefa`->s}
       </Typography>
       <Box mt=[xs(2)] position=[xs(#relative)]>
-        <Input placeholder="Compras da semana" />
+        <Input onChange placeholder="Compras da semana" />
         <Box position=[xs(#absolute)] right=[xs(8->#px)] top=[xs(8->#px)]>
           <Button> `Adicionar` </Button>
         </Box>
@@ -152,13 +148,13 @@ module NewTaskInput = {
 
 @react.component
 let make = () => {
-  let result = useTasks()
+  let { result, handleChange } = useTasks()
 
   <Box display=[xs(#flex)] flexDirection=[xs(#column)] alignItems=[xs(#center)]>
-    <Box display=[xs(#flex)] justifyContent=[xs(#center)] tag=#header> <img src=logo /> </Box>
+    <Box display=[xs(#flex)] justifyContent=[xs(#center)] tag=#header> <img src=Assets.logo /> </Box>
     <Box
       display=[xs(#flex)] flexDirection=[xs(#column)] width=[xs(100.0->#pct)] maxW=[xs(63.4->#rem)]>
-      <NewTaskInput />
+      <NewTaskInput onChange=handleChange />
       <Box mt=[xs(4)]>
         {switch result {
         | Loading => <Spinner />
