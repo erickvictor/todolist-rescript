@@ -1,5 +1,16 @@
-let {queryOptions, useQuery} = module(ReactQuery)
+type requestResult =
+  | Data(array<TaskTypes.t>)
+  | Loading
+  | Error
 
+type hookResult = {
+  result: requestResult,
+  taskName: string,
+  handleChange: ReactEvent.Form.t => unit,
+  handleCreateTask: ReactEvent.Mouse.t => unit,
+}
+
+let {queryOptions, useQuery} = module(ReactQuery)
 let apiUrl = "http://localhost:3001"
 let apiCodec = Jzon.array(TaskTypes.codec)
 
@@ -9,17 +20,6 @@ let handleFetch = _ => {
   Fetch.fetch(`${apiUrl}/tasks`, {"method": "GET"})
   ->then(response => Fetch.json(response))
   ->thenResolve(json => Jzon.decodeWith(json, apiCodec))
-}
-
-type requestResult =
-  | Data(array<TaskTypes.t>)
-  | Loading
-  | Error
-
-type hookResult = {
-  result: requestResult,
-  handleChange: ReactEvent.Form.t => unit,
-  taskName: string,
 }
 
 let useTasks = () => {
@@ -39,8 +39,14 @@ let useTasks = () => {
 
     setTaskName(_ => target["value"])
   }
+
+  let handleCreateTask = _ => {
+    Js.log(taskName)
+  }
+
   {
     taskName: taskName,
+    handleCreateTask: handleCreateTask,
     handleChange: handleChange,
     result: switch result {
     | {isLoading: true} => Loading

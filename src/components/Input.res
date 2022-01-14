@@ -26,6 +26,6 @@ module Styles = {
 }
 
 @react.component
-let make = (~onChange=?, ~name=?, ~placeholder=?) => {
-  <input ?onChange ?name ?placeholder className=Styles.input />
+let make = (~onChange=?, ~name=?, ~value=?, ~placeholder=?) => {
+  <input ?value ?onChange ?name ?placeholder className=Styles.input />
 }
