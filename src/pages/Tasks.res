@@ -7,6 +7,7 @@ let formatDate = value => value->Js.Date.fromString->DateFns.format("dd/MM/yy hh
 
 @module("../assets/logo.svg") external logo: string = "default"
 @module("../assets/empty-state.svg") external emptyState: string = "default"
+@module("../assets/spinner.svg") external spinner: string = "default"
 
 module EmptyState = {
   @react.component
@@ -78,6 +79,20 @@ module TaskItem = {
   }
 }
 
+module Spinner = {
+  @react.component
+  let make = () => {
+    <Box
+      minH=[xs(40.0->#rem)]
+      width=[xs(100.0->#pct)]
+      display=[xs(#flex)]
+      justifyContent=[xs(#center)]
+      alignItems=[xs(#center)]>
+      <Base tag=#img width=[xs(6.4->#rem)] src=spinner />
+    </Box>
+  }
+}
+
 module NewTaskInput = {
   @react.component
   let make = () => {
@@ -113,16 +128,12 @@ let make = () => {
       <NewTaskInput />
       <Box mt=[xs(4)]>
         {switch result {
-        | Loading => "loading..."->s
+        | Loading => <Spinner />
         | Error => "Error :("->s
         | Data([]) => <EmptyState />
-        | Data(tasks) => tasks->map(({name, completed, createdAt}, key) => {
-            <TaskItem
-              key
-              name
-              createdAt={createdAt->formatDate}
-              completed
-            />
+        | Data(tasks) =>
+          tasks->map(({name, completed, createdAt}, key) => {
+            <TaskItem key name createdAt={createdAt->formatDate} completed />
           })
         }}
       </Box>
